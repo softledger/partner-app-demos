@@ -5,11 +5,11 @@
   "type": "module",
   "description": "Two 'SoftLedger + partner app' demos: sign-in-with-SoftLedger portal (src/) and OAuth account-linking with access+refresh tokens (login-app/)",
   "scripts": {
-    "start": "node --watch --env-file=.env --loader ts-node/esm src/index.ts",
+    "start:sign-in": "node --watch --env-file=.env --loader ts-node/esm sign-in-with-softledger/index.ts",
+    "start:account-linking": "node --watch --env-file=.env --loader ts-node/esm account-linking/index.ts",
     "typecheck": "tsc --noEmit",
     "lint": "npx @biomejs/biome check .",
-    "lint:fix": "npx @biomejs/biome check --write .",
-    "start:login": "node --watch --env-file=.env --loader ts-node/esm login-app/index.ts"
+    "lint:fix": "npx @biomejs/biome check --write ."
   },
   "dependencies": {
     "express": "^5.1.0",

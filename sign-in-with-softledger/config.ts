@@ -10,14 +10,14 @@ const required = (name: string) => {
 };
 
 export const config = {
-  port: Number(process.env.PARTNER_APP_PORT ?? 4001),
+  port: Number(process.env.SIGN_IN_PORT ?? 4001),
 
-  // WorkOS Connect (SoftLedger as the IdP). The AuthKit domain and the client
-  // id must belong to the SAME WorkOS environment.
-  authkitDomain: required('WORKOS_AUTHKIT_DOMAIN').replace(/\/$/, ''),
+  // SoftLedger as the identity provider. The authorization domain and the client
+  // id must belong to the SAME SoftLedger environment.
+  authDomain: required('SOFTLEDGER_AUTH_DOMAIN').replace(/\/$/, ''),
   clientId: required('PARTNER_APP_CLIENT_ID'),
   clientSecret: required('PARTNER_APP_CLIENT_SECRET'),
-  redirectUri: process.env.PARTNER_APP_REDIRECT_URI ?? 'http://localhost:4001/auth/callback',
+  redirectUri: process.env.SIGN_IN_REDIRECT_URI ?? 'http://localhost:4001/auth/callback',
 
   // Signs the express-session cookie; the default is fine only for local demos.
   sessionSecret: process.env.SESSION_SECRET ?? 'demo-only-not-a-secret',

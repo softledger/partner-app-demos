@@ -150,8 +150,7 @@ export const dashboardPage = (who: string, connection: Connection | undefined) =
     </div>
     <p class="sub">Connect your customer's SoftLedger organization to pull their accounting data into this product.</p>
     <div class="callout">
-      Clicking Connect runs a standard <b>OAuth authorization</b> against SoftLedger
-      (WorkOS Connect): the user approves access, and this product receives an
+      Clicking Connect runs a standard <b>OAuth authorization</b> against SoftLedger: the user approves access, and this product receives an
       <b>access token + refresh token</b> to call the SoftLedger API on their behalf —
       no SoftLedger credentials are ever entered here.
     </div>

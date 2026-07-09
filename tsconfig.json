@@ -9,5 +9,5 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["src", "login-app"]
+  "include": ["sign-in-with-softledger", "account-linking"]
 }

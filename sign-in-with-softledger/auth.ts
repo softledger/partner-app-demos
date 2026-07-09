@@ -1,4 +1,4 @@
-// "Sign in with SoftLedger" via WorkOS Connect, wired the way the Connect
+// "Sign in with SoftLedger" via SoftLedger's authorization server, wired the way the Connect
 // docs show for Passport: openid-client discovery + the openid-client/passport
 // strategy. The strategy handles state/nonce/PKCE and id_token validation;
 // the verify callback persists the tokenset as the session user. The access
@@ -29,7 +29,7 @@ declare global {
 }
 
 export const oidc = await client.discovery(
-  new URL(config.authkitDomain),
+  new URL(config.authDomain),
   config.clientId,
   config.clientSecret,
 );

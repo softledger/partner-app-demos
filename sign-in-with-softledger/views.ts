@@ -135,7 +135,7 @@ export const identityPage = (claims: JWTPayload) =>
   <div class="card">
     <h2>Who SoftLedger says you are</h2>
     <p class="sub">
-      These are the <b>id_token</b> claims issued by WorkOS Connect when you signed in with
+      These are the <b>id_token</b> claims issued by SoftLedger when you signed in with
       SoftLedger — verified at login (signature, issuer, audience, nonce). This app created no
       account and stored no password; this assertion <i>is</i> the identity.
     </p>

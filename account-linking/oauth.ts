@@ -1,4 +1,4 @@
-// Account-linking OAuth against WorkOS Connect. This app does NOT use
+// Account-linking OAuth against SoftLedger's authorization server. This app does NOT use
 // SoftLedger for its own login — the flow's only job is to collect a
 // SoftLedger access token + refresh token for the already-signed-in user, so
 // this product can call the SoftLedger API on their behalf.
@@ -20,7 +20,7 @@ export type Connection = {
 export type PendingLink = { state: string; codeVerifier: string };
 
 const oidc = await client.discovery(
-  new URL(config.authkitDomain),
+  new URL(config.authDomain),
   config.clientId,
   config.clientSecret,
 );
@@ -28,10 +28,10 @@ const oidc = await client.discovery(
 const meta = oidc.serverMetadata();
 if (!meta.jwks_uri) throw new Error('OIDC discovery document has no jwks_uri');
 const jwks = jose.createRemoteJWKSet(new URL(meta.jwks_uri));
-console.log(`[login-app] discovered OIDC config (issuer: ${meta.issuer})`);
+console.log(`[account-linking] discovered OIDC config (issuer: ${meta.issuer})`);
 
 // Offline verification of the granted access token — issuer and audience (the
-// WorkOS ENVIRONMENT's client id, which the token is addressed to) pinned.
+// SoftLedger ENVIRONMENT's client id, which the token is addressed to) pinned.
 const verifyAccessToken = async (token: string) => {
   const { payload } = await jose.jwtVerify(token, jwks, {
     issuer: meta.issuer,
@@ -82,7 +82,7 @@ export const completeLink = async (callbackUrl: URL, pending: PendingLink) => {
   return toConnection(tokens);
 };
 
-// WorkOS rotates refresh tokens — always store the returned one.
+// Refresh tokens rotate — always store the returned one.
 export const refreshConnection = async (connection: Connection): Promise<Connection> => {
   if (!connection.refresh_token) throw new Error('connection has no refresh token');
   const tokens = await client.refreshTokenGrant(oidc, connection.refresh_token);

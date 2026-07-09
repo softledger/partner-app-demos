@@ -1,7 +1,7 @@
 // Partner Login App — the account-linking pattern. This product has its OWN
 // (faked) login; the OAuth flow's only job is to collect a SoftLedger access
 // token + refresh token so the product can call the SoftLedger API on the
-// user's behalf. Compare with the portal demo (src/), where the SoftLedger
+// user's behalf. Compare with the sign-in demo (sign-in-with-softledger/), where the SoftLedger
 // login IS the app's login.
 
 import express from 'express';
@@ -59,7 +59,7 @@ app.get('/logout', (req, res) => {
   req.session.destroy(() => res.redirect('/'));
 });
 
-// --- Account linking: OAuth against SoftLedger (WorkOS Connect) -------------
+// --- Account linking: OAuth against SoftLedger -------------
 app.get('/oauth/connect', async (req, res) => {
   if (!req.session.userEmail) return res.redirect('/');
   const pending = beginLink();
@@ -79,7 +79,7 @@ app.get('/oauth/callback', async (req, res) => {
     connections.set(req.session.userEmail, connection);
     res.redirect('/');
   } catch (err) {
-    console.error(`[login-app] account link failed: ${(err as Error).message}`);
+    console.error(`[account-linking] account link failed: ${(err as Error).message}`);
     res.status(400).send(`Connecting SoftLedger failed: ${(err as Error).message}`);
   }
 });
@@ -91,7 +91,7 @@ app.post('/oauth/refresh', async (req, res) => {
   try {
     connections.set(email, await refreshConnection(connection));
   } catch (err) {
-    console.error(`[login-app] token refresh failed: ${(err as Error).message}`);
+    console.error(`[account-linking] token refresh failed: ${(err as Error).message}`);
     connections.delete(email);
   }
   res.redirect('/');
@@ -122,7 +122,7 @@ app.get('/api/ledger-accounts', async (req, res) => {
       connection = await refreshConnection(connection);
       connections.set(email, connection);
     } catch (err) {
-      console.error(`[login-app] token refresh failed: ${(err as Error).message}`);
+      console.error(`[account-linking] token refresh failed: ${(err as Error).message}`);
       connections.delete(email);
       return res.status(401).json({ error: 'SoftLedger connection expired — reconnect' });
     }
@@ -142,5 +142,5 @@ app.get('/api/ledger-accounts', async (req, res) => {
 });
 
 app.listen(config.port, () => {
-  console.log(`[login-app] demo running at http://localhost:${config.port}`);
+  console.log(`[account-linking] demo running at http://localhost:${config.port}`);
 });

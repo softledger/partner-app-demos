@@ -1,0 +1,29 @@
+{
+  "name": "partner-app-connect-demo",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Two 'SoftLedger + partner app' demos: sign-in-with-SoftLedger portal (src/) and OAuth account-linking with access+refresh tokens (login-app/)",
+  "scripts": {
+    "start": "node --watch --env-file=.env --loader ts-node/esm src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "npx @biomejs/biome check .",
+    "lint:fix": "npx @biomejs/biome check --write .",
+    "start:login": "node --watch --env-file=.env --loader ts-node/esm login-app/index.ts"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "jose": "^5.9.6",
+    "openid-client": "^6.1.7",
+    "passport": "^0.7.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/express-session": "^1.18.0",
+    "@types/node": "^22.10.2",
+    "@types/passport": "^1.0.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
